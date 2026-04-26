@@ -11,8 +11,9 @@ pandasDF = pd.DataFrame(data, columns = ['Name', 'Age'])
   
 # print dataframe. 
 print(pandasDF)
+#test commit
 
-from pyspark.sql import SparkSession
+from pyspark.sql import SparkSession  # type: ignore[import]
 
 spark = SparkSession.builder \
     .master("local[1]") \
@@ -25,7 +26,7 @@ sparkDF.show()
 
 #sparkDF=spark.createDataFrame(pandasDF.astype(str)) 
 from pyspark.sql.types import StructType,StructField, StringType, IntegerType
-mySchema = StructType([ StructField("First Name", StringType(), True)\
+mySchema = StructType([ StructField("Name", StringType(), True)\
                        ,StructField("Age", IntegerType(), True)])
 
 sparkDF2 = spark.createDataFrame(pandasDF,schema=mySchema)
@@ -36,7 +37,7 @@ sparkDF2.show()
 spark.conf.set("spark.sql.execution.arrow.enabled","true")
 spark.conf.set("spark.sql.execution.arrow.pyspark.fallback.enabled","true")
 
-pandasDF2=sparkDF2.select("*").toPandas
+pandasDF2 = sparkDF2.select("*").toPandas()
 print(pandasDF2)
 
 
